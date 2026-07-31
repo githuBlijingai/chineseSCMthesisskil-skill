@@ -1,9 +1,9 @@
 ---
-name: chinese-thesis-workbench
+name: chineseSCMthesisskil-skill
 description: Standardize, draft, revise, check, and package Chinese undergraduate thesis or graduation-design papers from school templates, task books, proposals, sample papers, source code, PCB files, schematics, BOM, screenshots, databases, APIs, tests, literature PDFs, Word comments, and existing drafts. Use when the user asks to write, generate, refactor, polish, reduce AIGC style, verify, format, or deliver a Chinese thesis with evidence traceability, figure registries, workflow logs, chapter word control, screenshots, references, DOCX output, and appendix DOCX. For MCU/embedded system theses, supports hardware evidence extraction from PCB layouts, schematics, BOM lists, and Gerber files.
 ---
 
-# Chinese Thesis Workbench
+# chineseSCMthesisskil-skill
 
 ## Operating Model
 
