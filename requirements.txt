@@ -1,0 +1,6 @@
+pdfplumber
+pypdf
+python-docx
+PyYAML
+playwright>=1.40.0
+# 注意：安装后需要运行 `playwright install chromium` 下载浏览器

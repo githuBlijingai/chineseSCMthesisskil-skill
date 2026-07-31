@@ -1,0 +1,447 @@
+# 单片机/嵌入式系统专用章节配置
+# 用于解决单片机论文内容分散、段落均匀、结构松散问题
+
+schema_version: "1.1"  # v1.1 新增硬件证据支持
+thesis_type: "mcu_system_design"
+applicable_types:
+  - "单片机系统设计"
+  - "嵌入式系统开发"
+  - "智能硬件设计"
+  - "物联网终端设计"
+
+# 硬件证据配置 (v1.1新增)
+hardware_evidence:
+  supported_file_types:
+    # PCB设计文件
+    pcb:
+      - ".pcbdoc"      # Altium Designer
+      - ".prjpcb"      # Altium Project
+      - ".kicad_pcb"   # KiCad PCB
+      - ".brd"         # Cadence/Eagle
+    # 原理图文件
+    schematic:
+      - ".schdoc"      # Altium Designer
+      - ".sch"         # Generic/KiCad/Eagle
+      - ".dsn"         # Cadence
+    # BOM物料清单
+    bom:
+      - ".csv"
+      - ".xlsx"
+      - ".xls"
+      - ".txt"
+    # 制造文件
+    gerber:
+      - ".gtl"         # 顶层铜
+      - ".gbl"         # 底层铜
+      - ".gbs"         # 阻焊顶层
+      - ".gbo"         # 阻焊底层
+      - ".gml"         # 丝印顶层
+      - ".gko"         # 轮廓
+      - ".drl"         # 钻孔
+
+  # 证据绑定要求
+  evidence_binding:
+    chapter_3_hardware:
+      required:
+        - "硬件证据文件存在（至少包含以下之一）：原理图/BOM/PCB文件"
+        - "主控芯片型号必须在BOM或原理图中找到"
+        - "电源电路参数必须有具体计算依据"
+      recommended:
+        - "原理图截图"
+        - "PCB布局截图"
+        - "BOM元器件清单"
+        - "芯片手册引用"
+    chapter_4_software:
+      required:
+        - "源码文件存在"
+        - "主程序流程图"
+      recommended:
+        - "main.c核心代码"
+        - "模块化代码文件"
+        - "中断服务程序代码"
+    chapter_5_testing:
+      required:
+        - "测试数据或测试报告"
+      recommended:
+        - "示波器截图"
+        - "串口日志"
+        - "测试照片"
+
+  # BOM元器件分类（用于章节描述）
+  component_categories:
+    mcus:
+      prefixes: ["U", "IC"]
+      examples: ["STM32F103C8T6", "AT89C51", "ESP32"]
+      chapter_reference: "3.1 主控单元电路"
+    passive:
+      prefixes: ["R", "C", "L"]
+      examples: ["10K电阻", "100nF电容"]
+      chapter_reference: "3.2 电源电路 / 3.3 传感器接口"
+    connectors:
+      prefixes: ["J", "P", "CN"]
+      examples: ["USB", "排针", "DB9"]
+      chapter_reference: "3.4 通信接口电路"
+
+# 段落长度控制 - 避免机械均匀
+paragraph_structure:
+  variation_strategy: "short_long_alternate"
+  short_paragraph:
+    min_chars: 50
+    max_chars: 120
+    purpose: "承上启下、强调结论、过渡说明"
+    usage_ratio: 0.3  # 30% 的段落为短段落
+  
+  medium_paragraph:
+    min_chars: 200
+    max_chars: 350
+    purpose: "技术描述、模块说明、原理阐述"
+    usage_ratio: 0.5  # 50% 的段落为中段落
+  
+  long_paragraph:
+    min_chars: 400
+    max_chars: 600
+    purpose: "详细分析、对比论证、综合讨论"
+    usage_ratio: 0.2  # 20% 的段落为长段落
+
+# 内容密度要求 - 强制具体技术细节
+content_density_requirements:
+  per_paragraph_minimum:
+    technical_keywords: 2  # 每段至少2个技术关键词
+    specific_parameters: 1  # 每段至少1个具体参数
+  
+  technical_keywords_pool:
+    hardware:
+      - "STM32F103"
+      - "STM32F407"
+      - "51单片机"
+      - "GPIO"
+      - "USART"
+      - "I2C"
+      - "SPI"
+      - "ADC"
+      - "DMA"
+      - "NVIC"
+      - "时钟树"
+      - "复位电路"
+      - "晶振"
+      - "滤波电容"
+      - "上拉电阻"
+    
+    software:
+      - "中断服务程序"
+      - "定时器中断"
+      - "状态机"
+      - "轮询"
+      - "回调函数"
+      - "寄存器配置"
+      - "HAL库"
+      - "标准库"
+      - "固件库"
+      - "初始化函数"
+      - "主循环"
+      - "看门狗"
+  
+  specific_parameters_pool:
+    - "72MHz主频"
+    - "3.3V供电"
+    - "5V兼容"
+    - "12位ADC"
+    - "1ms定时"
+    - "9600波特率"
+    - "8MHz晶振"
+    - "10K上拉"
+    - "100nF退耦"
+    - "4.7K限流"
+
+# 章节专用配置
+chapters:
+  chapter_1:  # 绪论
+    title: "绪论"
+    paragraph_pattern: ["short", "medium", "medium", "short", "long"]
+    required_elements:
+      - "具体的应用场景描述"
+      - "明确的技术指标"
+      - "国内外至少3个同类方案对比"
+    
+    content_focus: "background_and_significance"
+    
+    section_structure:
+      - section_id: "1.1"
+        title: "研究背景"
+        paragraph_count: 3
+        paragraph_lengths: [80, 250, 150]
+        required_content: ["行业现状", "技术痛点"]
+      
+      - section_id: "1.2"
+        title: "国内外研究现状"
+        paragraph_count: 4
+        paragraph_lengths: [100, 300, 300, 100]
+        required_content: ["国外方案", "国内方案", "方案对比表"]
+      
+      - section_id: "1.3"
+        title: "研究内容与目标"
+        paragraph_count: 3
+        paragraph_lengths: [120, 280, 120]
+        required_content: ["功能需求", "性能指标", "创新点"]
+  
+  chapter_2:  # 相关技术
+    title: "系统方案与关键技术"
+    paragraph_pattern: ["medium", "long", "short", "medium"]
+    required_elements:
+      - "主控芯片选型对比表"
+      - "技术方案对比论证"
+    
+    content_focus: "technology_selection"
+    
+    section_structure:
+      - section_id: "2.1"
+        title: "系统总体方案"
+        paragraph_count: 4
+        paragraph_lengths: [150, 350, 350, 100]
+        required_content: ["系统框图", "模块划分", "接口定义"]
+      
+      - section_id: "2.2"
+        title: "主控芯片选型"
+        paragraph_count: 5
+        paragraph_lengths: [100, 280, 280, 280, 80]
+        required_content: ["候选芯片", "参数对比表", "选型依据"]
+      
+      - section_id: "2.3"
+        title: "关键技术分析"
+        paragraph_count: 4
+        paragraph_lengths: [300, 300, 300, 100]
+        required_content: ["通信协议", "传感器接口", "电源管理"]
+  
+  chapter_3:  # 硬件设计
+    title: "硬件电路设计"
+    paragraph_pattern: ["short", "medium", "long", "medium", "short"]
+    required_elements:
+      - "至少3个模块的详细电路说明"
+      - "引脚分配表"
+      - "电源电路参数计算"
+    
+    content_focus: "hardware_implementation"
+    min_total_words: 3000
+    
+    section_structure:
+      - section_id: "3.1"
+        title: "主控单元电路"
+        paragraph_count: 6
+        paragraph_lengths: [100, 250, 450, 250, 250, 100]
+        required_content: 
+          - "最小系统电路描述"
+          - "时钟电路参数计算"
+          - "复位电路设计"
+          - "启动模式配置"
+        evidence_required:
+          - "原理图截图"
+          - "芯片手册引用"
+      
+      - section_id: "3.2"
+        title: "电源电路设计"
+        paragraph_count: 4
+        paragraph_lengths: [120, 350, 350, 120]
+        required_content:
+          - "电源架构说明"
+          - "LDO/DC-DC选型计算"
+          - "退耦电容配置"
+        evidence_required:
+          - "电源树图"
+          - "纹波测试数据"
+      
+      - section_id: "3.3"
+        title: "传感器接口电路"
+        paragraph_count: 5
+        paragraph_lengths: [80, 280, 450, 280, 80]
+        required_content:
+          - "传感器型号及参数"
+          - "信号调理电路"
+          - "接口电平转换"
+        evidence_required:
+          - "传感器datasheet截图"
+          - "接口电路图"
+      
+      - section_id: "3.4"
+        title: "通信接口电路"
+        paragraph_count: 4
+        paragraph_lengths: [100, 300, 300, 100]
+        required_content:
+          - "UART/USB/网口电路"
+          - "隔离与保护设计"
+          - "ESD防护"
+        evidence_required:
+          - "通信接口电路图"
+      
+      - section_id: "3.5"
+        title: "PCB设计与布局"
+        paragraph_count: 4
+        paragraph_lengths: [120, 350, 350, 120]
+        required_content:
+          - "层叠结构说明"
+          - "关键信号布线"
+          - "EMC考虑"
+        evidence_required:
+          - "PCB布局截图"
+          - "3D视图"
+  
+  chapter_4:  # 软件设计
+    title: "软件程序设计"
+    paragraph_pattern: ["medium", "long", "short", "medium", "long", "short"]
+    required_elements:
+      - "主程序流程图"
+      - "至少3个关键模块代码"
+      - "中断服务程序说明"
+    
+    content_focus: "software_implementation"
+    min_total_words: 3500
+    min_code_blocks: 5
+    
+    section_structure:
+      - section_id: "4.1"
+        title: "软件开发环境"
+        paragraph_count: 3
+        paragraph_lengths: [150, 280, 120]
+        required_content:
+          - "IDE及版本"
+          - "编译器及调试器"
+          - "库函数选择"
+      
+      - section_id: "4.2"
+        title: "主程序架构"
+        paragraph_count: 5
+        paragraph_lengths: [100, 350, 500, 300, 100]
+        required_content:
+          - "主程序流程图"
+          - "初始化流程"
+          - "主循环逻辑"
+        evidence_required:
+          - "main.c代码"
+          - "流程图"
+      
+      - section_id: "4.3"
+        title: "功能模块设计"
+        paragraph_count: 6
+        paragraph_lengths: [80, 300, 450, 300, 450, 120]
+        required_content:
+          - "模块划分说明"
+          - "接口函数定义"
+          - "关键算法实现"
+        evidence_required:
+          - "模块化代码"
+          - "函数说明"
+      
+      - section_id: "4.4"
+        title: "中断与定时处理"
+        paragraph_count: 4
+        paragraph_lengths: [120, 380, 380, 120]
+        required_content:
+          - "中断优先级配置"
+          - "定时器中断服务程序"
+          - "中断嵌套处理"
+        evidence_required:
+          - "中断配置代码"
+          - "ISR代码"
+      
+      - section_id: "4.5"
+        title: "通信协议实现"
+        paragraph_count: 4
+        paragraph_lengths: [100, 350, 350, 100]
+        required_content:
+          - "协议帧格式定义"
+          - "发送/接收处理"
+          - "错误处理机制"
+        evidence_required:
+          - "协议处理代码"
+          - "通信测试数据"
+  
+  chapter_5:  # 系统测试
+    title: "系统测试与验证"
+    paragraph_pattern: ["short", "medium", "medium", "long", "short"]
+    required_elements:
+      - "测试环境说明"
+      - "至少3项功能测试"
+      - "性能测试数据"
+    
+    content_focus: "testing_validation"
+    min_total_words: 2500
+    
+    section_structure:
+      - section_id: "5.1"
+        title: "测试环境与工具"
+        paragraph_count: 3
+        paragraph_lengths: [120, 280, 100]
+        required_content:
+          - "硬件测试平台"
+          - "软件调试工具"
+          - "测试仪器"
+      
+      - section_id: "5.2"
+        title: "功能测试"
+        paragraph_count: 5
+        paragraph_lengths: [80, 300, 300, 300, 120]
+        required_content:
+          - "测试用例设计"
+          - "测试步骤"
+          - "测试结果"
+        evidence_required:
+          - "测试表格"
+          - "测试截图/照片"
+      
+      - section_id: "5.3"
+        title: "性能测试"
+        paragraph_count: 4
+        paragraph_lengths: [100, 350, 350, 100]
+        required_content:
+          - "功耗测试"
+          - "响应时间测试"
+          - "稳定性测试"
+        evidence_required:
+          - "示波器截图"
+          - "串口日志"
+      
+      - section_id: "5.4"
+        title: "测试结果分析"
+        paragraph_count: 3
+        paragraph_lengths: [150, 400, 150]
+        required_content:
+          - "测试数据统计"
+          - "问题与解决"
+          - "与指标对比"
+
+# 逻辑衔接模板 - 确保段落间紧密连接
+logical_transitions:
+  hardware_to_software:
+    - "硬件电路设计完成后，软件部分需要针对上述硬件平台进行程序开发..."
+    - "基于第3章设计的硬件架构，本章进行相应的软件程序设计..."
+  
+  module_to_module:
+    - "在上述XX模块的基础上，为实现YY功能，需要..."
+    - "完成XX配置后，下一步是YY的初始化..."
+  
+  theory_to_practice:
+    - "基于上述原理分析，具体实现方案如下..."
+    - "为验证上述方案的可行性，设计了如下实验..."
+  
+  result_to_analysis:
+    - "根据表X-X的测试数据，可以得出以下结论..."
+    - "上述结果表明，系统在XX方面表现..."
+
+# AIGC风格治理 - 单片机专用规则
+aigc_style_rules:
+  forbidden_patterns:
+    - "首先...其次...再次...最后"  # 机械列点
+    - "具有重要意义"  # 空话
+    - "具有重要价值"  # 空话
+    - "本文设计的系统"  # 冗余表述
+  
+  required_patterns:
+    - 每章至少出现1次芯片具体型号
+    - 每节至少出现1次具体参数值
+    - 技术描述必须有数据支撑
+  
+  paragraph_opening_variations:
+    - "为实现XX功能，采用YY方案..."
+    - "针对XX问题，设计YY电路..."
+    - "考虑到XX约束，选择YY参数..."
+    - "测试结果表明，XX指标达到YY..."
+    - "与ZZ方案相比，本文方案..."
