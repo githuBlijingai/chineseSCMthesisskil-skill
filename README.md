@@ -1,4 +1,4 @@
-# chinese-thesis-workbench
+# chineseSCMthesisskil-skill
 
 > 以标准和证据为骨架，以四种 DOCX 交付路径为输出，把项目源码、学校模板、往届样文、文献和截图整合成可追溯、可续写、可检查的中文本科论文交付工作台。
 
